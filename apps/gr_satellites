@@ -23,6 +23,7 @@ from satellites.utils.config import open_config
 from satellites.utils.satcfg import get_cfg
 from satellites.satyaml import yamlfiles
 
+gr.logging().set_default_level(gr.log_levels.error)
 
 version = f"""gr_satellites {satellites.__version__}
 Copyright (C) 2020 Daniel Estevez
@@ -127,6 +128,7 @@ def argument_parser():
         '--hexdump', action='store_true',
         help='Hexdump instead of telemetry parse')
     p_output.add_argument('--dump_path', help='Path to dump internal signals')
+    p_output.add_argument('--crc', action='store_false', help='turn off crc check')
     return p
 
 

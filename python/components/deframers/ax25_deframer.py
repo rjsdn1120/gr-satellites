@@ -38,7 +38,10 @@ class ax25_deframer(gr.hier_block2):
         self.nrzi = nrzi_decode()
         if g3ruh_scrambler:
             self.descrambler = digital.descrambler_bb(0x21, 0, 16)
-        self.deframer = hdlc_deframer(True, 10000)
+        crc = True
+        if options is not None:
+            crc = options.crc
+        self.deframer = hdlc_deframer(crc, 10000)
 
         self._blocks = [self, self.slicer, self.nrzi]
         if g3ruh_scrambler:

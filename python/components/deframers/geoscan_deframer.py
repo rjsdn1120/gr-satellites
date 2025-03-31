@@ -54,8 +54,12 @@ class geoscan_deframer(gr.hier_block2, options_block):
 
         self.connect(self, self.slicer, self.deframer)
         self.msg_connect((self.deframer, 'out'), (self.scrambler, 'in'))
-        self.msg_connect((self.scrambler, 'out'), (self.crc, 'in'))
-        self.msg_connect((self.crc, 'ok'), (self, 'out'))
+        if options.crc:
+            self.msg_connect((self.scrambler, 'out'), (self.crc, 'in'))
+            self.msg_connect((self.crc, 'ok'), (self, 'out'))
+        else:
+            self.msg_connect((self.scrambler, 'out'), (self, 'out'))
+            
 
     _default_sync_threshold = 4
 
